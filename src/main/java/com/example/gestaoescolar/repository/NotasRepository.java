@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface NotasRepository extends JpaRepository<Notas, Long> {
 
-    @Query("SELECT n FROM Notas n WHERE n.id_matricula.id_matricula = = (:matricula)")
+    @Query("SELECT n FROM Notas n WHERE n.id_matricula.id_matricula = (:matricula)")
     Optional<Notas> findNotaByMatricula(@Param("matricula") Long matricula);
 
 }

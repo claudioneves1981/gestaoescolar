@@ -17,38 +17,15 @@ import java.util.List;
 @Data
 public class ProfessorEntityAdapter {
 
-    private List<Professores> professores;
     private Professores professor;
 
-    @Autowired
-    private ViaCepService viaCepService;
 
-    @Autowired
-    private PasswordEncoder encoder;
-
-    public ProfessorEntityAdapter(List<ProfessorDTO> professoresDTO){
-        professores = toModelList(professoresDTO);
+    public ProfessorEntityAdapter(ProfessorDTO professoresDTO, EnderecoDTO enderecoDTO){
+        professor = toModel(professoresDTO, enderecoDTO);
     }
 
-    public ProfessorEntityAdapter(ProfessorDTO professoresDTO){
-        professor = toModel(professoresDTO);
-    }
 
-    public List<Professores> toModelList(List<ProfessorDTO> professoresDTO){
-        List<Professores> professores = new ArrayList<>();
-        for(ProfessorDTO professorDTO : professoresDTO){
-            professores.add(toModel(professorDTO));
-        }
-        return professores;
-    }
-
-    public Professores toModel(ProfessorDTO professorDTO){
-
-        String pass = professorDTO.getSenha();
-        String cep = professorDTO.getCep();
-        EnderecoDTO enderecoDTO = viaCepService.consultarCep(cep);
-        List<String> roles = new ArrayList<>();
-        roles.add("PROFESSOR");
+    public Professores toModel(ProfessorDTO professorDTO, EnderecoDTO enderecoDTO){
 
         return Professores.builder()
                 .area_formacao(professorDTO.getArea_formacao())
@@ -60,20 +37,17 @@ public class ProfessorEntityAdapter {
                         .identidade(professorDTO.getIdentidade())
                         .nacionalidade(professorDTO.getNacionalidade())
                         .naturalidade(professorDTO.getNaturalidade())
+                        .telefone(professorDTO.getTelefone())
+                        .nascimento(professorDTO.getNascimento())
                         .endereco(Endereco.builder()
-                                .cep(cep)
+                                .uf(enderecoDTO.getUf())
+                                .cep(enderecoDTO.getCep())
+                                .localidade(enderecoDTO.getLocalidade())
+                                .logradouro(enderecoDTO.getLogradouro())
                                 .numero(professorDTO.getNumero())
                                 .complemento(professorDTO.getComplemento())
-                                .logradouro(enderecoDTO.getLogradouro())
-                                .localidade(enderecoDTO.getLocalidade())
-                                .uf(enderecoDTO.getUf())
                                 .build())
                         .build())
-                .login(Login.builder()
-                        .senha(encoder.encode(pass))
-                        .roles(roles)
-                        .build())
                 .build();
-
     }
 }

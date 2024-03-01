@@ -11,10 +11,12 @@ import com.example.gestaoescolar.models.Notas;
 import com.example.gestaoescolar.models.Professores;
 import com.example.gestaoescolar.repository.NotasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class NotaService {
 
     @Autowired

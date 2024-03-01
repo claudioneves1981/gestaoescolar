@@ -14,39 +14,14 @@ import java.util.List;
 @Data
 public class MatriculasEntityAdapter {
 
-    private List<Matriculas> matriculas;
     private Matriculas matricula;
 
-    @Autowired
-    private ViaCepService viaCepService;
-
-    @Autowired
-    private PasswordEncoder encoder;
-
-
-    public MatriculasEntityAdapter(List<MatriculaDTO> matriculasDTO){
-        matriculas = toModelList(matriculasDTO);
+    public MatriculasEntityAdapter(MatriculaDTO matriculasDTO, EnderecoDTO enderecoDTO){
+        matricula = toModel(matriculasDTO, enderecoDTO);
     }
 
-    public MatriculasEntityAdapter(MatriculaDTO matriculasDTO){
-        matricula = toModel(matriculasDTO);
-    }
 
-    public List<Matriculas> toModelList(List<MatriculaDTO> matriculasDTO){
-        List<Matriculas> matriculas = new ArrayList<>();
-        for(MatriculaDTO matriculaDTO : matriculasDTO){
-            matriculas.add(toModel(matriculaDTO));
-        }
-        return matriculas;
-    }
-
-    public Matriculas toModel(MatriculaDTO matriculaDTO){
-        String pass = matriculaDTO.getSenha();
-        String cep = matriculaDTO.getCep();
-        EnderecoDTO enderecoDTO = viaCepService.consultarCep(cep);
-        List<String> roles = new ArrayList<>();
-        roles.add("ESTUDANTE");
-        roles.add("PROFESSOR");
+    public Matriculas toModel(MatriculaDTO matriculaDTO, EnderecoDTO enderecoDTO){
         return Matriculas.builder()
                 .id_estudante(Estudante.builder()
                         .id_pessoa(Pessoa.builder()
@@ -57,7 +32,7 @@ public class MatriculasEntityAdapter {
                                 .nacionalidade(matriculaDTO.getNacionalidade())
                                 .naturalidade(matriculaDTO.getNaturalidade())
                                 .endereco(Endereco.builder()
-                                        .cep(cep)
+                                        .cep(matriculaDTO.getCep())
                                         .numero(matriculaDTO.getNumero())
                                         .complemento(matriculaDTO.getComplemento())
                                         .logradouro(enderecoDTO.getLogradouro())
@@ -87,10 +62,6 @@ public class MatriculasEntityAdapter {
                         .build())
                 .id_turma(Turmas.builder()
                         .turma(matriculaDTO.getTurma())
-                        .build())
-                .login(Login.builder()
-                        .senha(encoder.encode(pass))
-                        .roles(roles)
                         .build())
                 .build();
     }

@@ -23,6 +23,8 @@ public class ProfessorDTO {
 
     private String identidade;
 
+    private String telefone;
+
     private LocalDate nascimento;
 
     private String nacionalidade;

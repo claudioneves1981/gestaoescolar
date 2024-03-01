@@ -10,21 +10,38 @@ import com.example.gestaoescolar.models.*;
 import com.example.gestaoescolar.repository.MatriculasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class MatriculaService {
 
 
     @Autowired
     private MatriculasRepository matriculasRepository;
 
+    @Autowired
+    private ViaCepService viaCepService;
+
+    @Autowired
+    private PasswordEncoder encoder;
+
     public void createMatricula(MatriculaDTO matriculaDTO) {
-        MatriculasEntityAdapter matriculasEntityAdapter = new MatriculasEntityAdapter(matriculaDTO);
+        EnderecoDTO enderecoDTO = viaCepService.consultarCep(matriculaDTO.getCep());
+        MatriculasEntityAdapter matriculasEntityAdapter = new MatriculasEntityAdapter(matriculaDTO, enderecoDTO);
         Matriculas matricula = matriculasEntityAdapter.getMatricula();
+        String pass = matriculaDTO.getSenha();
+        List<String> roles = new ArrayList<>();
+        roles.add("ESTUDANTE");
+        roles.add("PROFESSOR");
+        Login login = new Login();
+        login.setUsuario(matriculaDTO.getUsuario());
+        login.setSenha(encoder.encode(pass));
+        login.setRoles(roles);
+        matricula.setLogin(login);
         matriculasRepository.save(matricula);
     }
 
