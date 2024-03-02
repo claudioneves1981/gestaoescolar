@@ -1,6 +1,7 @@
 package com.example.gestaoescolar.controlller;
 
 import com.example.gestaoescolar.dtos.ProfessorDTO;
+import com.example.gestaoescolar.dtos.response.ProfessorResponseDTO;
 import com.example.gestaoescolar.exceptions.ProfessorException;
 import com.example.gestaoescolar.services.ProfessoresService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,12 @@ public class ProfessorController {
     }
 
     @GetMapping("/professor/{id}")
-    public ProfessorDTO findByProfessor(@PathVariable("id") Long id) throws ProfessorException {
+    public ProfessorResponseDTO findByProfessor(@PathVariable("id") Long id) throws ProfessorException {
         return professoresService.findByProfessor(id);
     }
 
     @GetMapping("/professor/listarprofessores")
-    public List<ProfessorDTO> listProfessores(){
+    public List<ProfessorResponseDTO> listProfessores(){
         return professoresService.listProfessores();
     }
 }

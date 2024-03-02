@@ -4,6 +4,7 @@ import com.example.gestaoescolar.adapters.MatriculasDTOAdapter;
 import com.example.gestaoescolar.adapters.MatriculasEntityAdapter;
 import com.example.gestaoescolar.dtos.EnderecoDTO;
 import com.example.gestaoescolar.dtos.MatriculaDTO;
+import com.example.gestaoescolar.dtos.response.MatriculaResponseDTO;
 import com.example.gestaoescolar.exceptions.MatriculasException;
 import com.example.gestaoescolar.models.*;
 import com.example.gestaoescolar.repository.MatriculasRepository;
@@ -44,13 +45,13 @@ public class MatriculaService {
         matriculasRepository.save(matricula);
     }
 
-    public MatriculaDTO findByMatricula(Long id_matricula) throws MatriculasException {
+    public MatriculaResponseDTO findByMatricula(Long id_matricula) throws MatriculasException {
         Matriculas matricula = matriculasRepository.findById(id_matricula).orElseThrow(MatriculasException::new);
         MatriculasDTOAdapter matriculasDTOAdapter = new MatriculasDTOAdapter(matricula);
-        return matriculasDTOAdapter.getMatriculaDTO();
+        return matriculasDTOAdapter.getMatriculaResponseDTO();
     }
 
-    public List<MatriculaDTO> listMatriculas(){
+    public List<MatriculaResponseDTO> listMatriculas(){
 
         List<Matriculas> allMatriculas = matriculasRepository.findAll();
         MatriculasDTOAdapter matriculaDTOAdapter = new MatriculasDTOAdapter(allMatriculas);

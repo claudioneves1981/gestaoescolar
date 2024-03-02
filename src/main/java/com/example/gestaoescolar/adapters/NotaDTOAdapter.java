@@ -33,6 +33,9 @@ public class NotaDTOAdapter {
         Float media = (nota.getNota1() + nota.getNota2() + nota.getNota3()) / 3;
         return NotaDTO.builder()
                 .media(media)
+                .nota1(nota.getNota1())
+                .nota2(nota.getNota2())
+                .nota3(nota.getNota3())
                 .id_matricula(nota.getId_matricula().getId_matricula())
                 .id_aula(nota.getId_aula().getId_aulas())
                 .build();
