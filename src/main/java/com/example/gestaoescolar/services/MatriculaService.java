@@ -1,6 +1,5 @@
 package com.example.gestaoescolar.services;
 
-import com.example.gestaoescolar.adapters.AulasDTOAdapter;
 import com.example.gestaoescolar.adapters.MatriculasDTOAdapter;
 import com.example.gestaoescolar.adapters.MatriculasEntityAdapter;
 import com.example.gestaoescolar.dtos.EnderecoDTO;

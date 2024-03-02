@@ -10,18 +10,19 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping("/gestaoescolar")
 public class ProfessorController {
 
     @Autowired
     private ProfessoresService professoresService;
 
-    @PostMapping("gestaoescolar/professor/cadastrarprofessor")
+    @PostMapping("/professor/cadastrarprofessor")
     public void createProfessor(@RequestBody ProfessorDTO professorDTO) {
         professoresService.createProfessor(professorDTO);
     }
 
     @GetMapping("/professor/{id}")
-    public ProfessorDTO findByProfessor(Long id) throws ProfessorException {
+    public ProfessorDTO findByProfessor(@PathVariable("id") Long id) throws ProfessorException {
         return professoresService.findByProfessor(id);
     }
 

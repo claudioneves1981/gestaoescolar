@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -18,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
     public class WebSecurityConfig {
 
         @Bean
-        public PasswordEncoder encoder() {
+        public BCryptPasswordEncoder encoder() {
             return new BCryptPasswordEncoder();
         }
 
@@ -42,17 +41,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
                     .requestMatchers(SWAGGER_WHITELIST).permitAll()
                     .requestMatchers("/h2-console/**").permitAll()
                     .requestMatchers( "/gestaoescolar/professor/cadastrarprofessor").permitAll()
-                   // .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                    //.requestMatchers(HttpMethod.POST, "/gestaoescolar/professor/**").permitAll()
-                   // .requestMatchers(HttpMethod.POST, "/gestaoescolar/professor/listarprofessores").permitAll()
-                   // .requestMatchers(HttpMethod.POST, "/gestaoescolar/aula/novaaula").hasAnyRole("PROFESSOR")
-                   // .requestMatchers(HttpMethod.POST, "/gestaoescolar/aula/**").hasAnyRole("PROFESSOR")
-                   // .requestMatchers(HttpMethod.POST, "/gestaoescolar/matricula/novamatricula").permitAll()
-                   // .requestMatchers(HttpMethod.POST, "/gestaoescolar/matricula/**").hasAnyRole("PROFESSOR","ESTUDANTE")
-                   // .requestMatchers(HttpMethod.POST, "/gestaoescolar/matricula/listarmatriculas").hasAnyRole("PROFESSOR")
-                    //.requestMatchers(HttpMethod.POST, "/gestaoescolar/notas/lancarnota").hasAnyRole("PROFESSOR")
-                   // .requestMatchers(HttpMethod.POST, "/gestaoescolar/notas/**").hasAnyRole("PROFESSOR","ESTUDANTE")
-                    //.requestMatchers(HttpMethod.POST, "/gestaoescolar/notas/listarnotas").hasAnyRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/gestaoescolar/professor/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/gestaoescolar/professor/listarprofessores").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/gestaoescolar/aula/novaaula").hasAnyRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.DELETE, "/gestaoescolar/aula/**").hasAnyRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.POST, "/gestaoescolar/matricula/novamatricula").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/gestaoescolar/matricula/**").hasAnyRole("PROFESSOR","ESTUDANTE")
+                    .requestMatchers(HttpMethod.GET, "/gestaoescolar/matricula/listarmatriculas").hasAnyRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.POST, "/gestaoescolar/notas/lancarnota").hasAnyRole("PROFESSOR")
+                    .requestMatchers(HttpMethod.GET, "/gestaoescolar/notas/**").hasAnyRole("PROFESSOR","ESTUDANTE")
+                    .requestMatchers(HttpMethod.GET, "/gestaoescolar/notas/listarnotas").hasAnyRole("PROFESSOR")
                     .anyRequest().authenticated()
                     .and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

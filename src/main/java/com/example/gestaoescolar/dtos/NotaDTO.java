@@ -14,9 +14,7 @@ import lombok.NoArgsConstructor;
 public class NotaDTO {
 
     private Long id_matricula;
-    private String estudante;
     private Long id_aula;
-    private String disciplina;
     private Float nota1;
     private Float nota2;
     private Float nota3;

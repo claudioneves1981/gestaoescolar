@@ -19,7 +19,7 @@ public class Professores {
     @Column(name = "ID_PROFESSOR")
     private Long id_professor;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinTable(
             name="TB_PROFESSOR_PESSOA",
             joinColumns = @JoinColumn(name = "ID_PROFESSOR", referencedColumnName = "ID_PROFESSOR"),

@@ -31,8 +31,9 @@ import java.util.Date;
         @PostMapping("/login")
         public SessaoDTO logar(@RequestBody LoginDTO login) throws LoginException {
             Login user = service.findByUsuario(login.getUsuario());
+            System.out.print(user);
             if (user != null) {
-                boolean passwordOk = encoder.matches(login.getUsuario(), user.getUsuario());
+                boolean passwordOk = encoder.matches(login.getSenha(), user.getSenha());
                 if (!passwordOk) {
                     throw new RuntimeException("Senha invalida para o login:" + login.getUsuario());
                 }
