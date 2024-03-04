@@ -4,6 +4,7 @@ import com.example.gestaoescolar.adapters.NotaDTOAdapter;
 import com.example.gestaoescolar.adapters.NotaEntityAdapter;
 import com.example.gestaoescolar.adapters.ProfessoresDTOAdapter;
 import com.example.gestaoescolar.dtos.NotaDTO;
+import com.example.gestaoescolar.dtos.response.NotaResponseDTO;
 import com.example.gestaoescolar.exceptions.NotasException;
 import com.example.gestaoescolar.models.Aulas;
 import com.example.gestaoescolar.models.Matriculas;
@@ -41,13 +42,13 @@ public class NotaService {
         notasRepository.save(nota);
     }
 
-    public NotaDTO mediaEstudante(Long id_matricula) throws NotasException {
+    public NotaResponseDTO mediaEstudante(Long id_matricula) throws NotasException {
         Notas notas = notasRepository.findNotaByMatricula(id_matricula).orElseThrow(NotasException::new);
         NotaDTOAdapter notaDTOAdapter = new NotaDTOAdapter(notas);
         return notaDTOAdapter.getNotaDTO();
     }
 
-    public List<NotaDTO> listNotas(){
+    public List<NotaResponseDTO> listNotas(){
 
         List<Notas> allNotas = notasRepository.findAll();
         NotaDTOAdapter notasDTOAdapter = new NotaDTOAdapter(allNotas);

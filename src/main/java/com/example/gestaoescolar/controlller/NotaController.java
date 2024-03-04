@@ -1,6 +1,7 @@
 package com.example.gestaoescolar.controlller;
 
 import com.example.gestaoescolar.dtos.NotaDTO;
+import com.example.gestaoescolar.dtos.response.NotaResponseDTO;
 import com.example.gestaoescolar.exceptions.NotasException;
 import com.example.gestaoescolar.services.NotaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,12 @@ public class NotaController {
     }
 
     @GetMapping("notas/{id}")
-    public NotaDTO mediaEstudante(@PathVariable("id") Long id) throws NotasException {
+    public NotaResponseDTO mediaEstudante(@PathVariable("id") Long id) throws NotasException {
         return notaService.mediaEstudante(id);
     }
 
     @GetMapping("notas/listarnotas")
-    public List<NotaDTO> listNotas(){
+    public List<NotaResponseDTO> listNotas(){
         return notaService.listNotas();
     }
 }

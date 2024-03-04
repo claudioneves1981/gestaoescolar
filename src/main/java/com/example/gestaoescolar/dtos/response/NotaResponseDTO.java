@@ -1,7 +1,5 @@
-package com.example.gestaoescolar.dtos;
+package com.example.gestaoescolar.dtos.response;
 
-import com.example.gestaoescolar.models.Aulas;
-import com.example.gestaoescolar.models.Matriculas;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotaDTO {
+public class NotaResponseDTO {
 
-    private Long id_matricula;
-    private Long id_aula;
+    private String nome;
+    private String disciplina;
     private Float nota1;
     private Float nota2;
     private Float nota3;
-
+    private Float media;
 }
